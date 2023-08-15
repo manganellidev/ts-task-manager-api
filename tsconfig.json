@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "target": "ES6",
+        "target": "ES2020",
         "module": "ES2022",
-        "moduleResolution": "Node",
+        "moduleResolution": "Node16",
         "rootDir": "./src",
         "outDir": "./dist",
         "removeComments": true,
@@ -14,5 +14,9 @@
         "noImplicitReturns": true,
         "skipLibCheck": true
     },
-    "exclude": ["tests"]
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node"
+    },
+    "exclude": ["__test__"]
 }
