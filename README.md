@@ -68,3 +68,7 @@ MONGODB_URL=mongodb://127.0.0.1:27017/task-manager-api
 ### Run the app
 
 `npm start`
+
+### Swagger
+
+The `swagger ui` is available under `/api-docs`.
