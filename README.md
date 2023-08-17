@@ -6,9 +6,9 @@ A REST API to register tasks for users. You will be able to CRUD users, CRUD tas
 
 ## Prerequisites:
 
--   Node.js
--   MongoDB
--   Configure .env file
+- Node.js
+- MongoDB
+- Configure .env file
 
 <br />
 

@@ -3,7 +3,7 @@ import { UserModel } from '../../../infrastructure/database/mongodb/models/user-
 import MongoDbUserRepository from '../../../infrastructure/database/mongodb/repositories/mongo-db-user-repository.js';
 
 export default class MongoDbUserRespositoryFactory {
-    static make() {
-        return new MongoDbUserRepository(UserModel as typeof Model);
-    }
+  static make() {
+    return new MongoDbUserRepository(UserModel as typeof Model);
+  }
 }

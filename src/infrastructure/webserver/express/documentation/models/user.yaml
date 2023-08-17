@@ -1,0 +1,126 @@
+components:
+  requestBodies:
+    UserRequestPost:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+          examples:
+            UserPostRequestFull:
+              $ref: '#/components/examples/UserPostRequestFull'
+            UserPostRequestWithoutAge:
+              $ref: '#/components/examples/UserPostRequestWithoutAge'
+    UserRequestPatch:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+          examples:
+            UserPatchRequestPass:
+              $ref: '#/components/examples/UserPatchRequestPass'
+            UserPatchRequestNameAndAge:
+              $ref: '#/components/examples/UserPatchRequestNameAndAge'
+  responses:
+    UserResponseCreated:
+      description: Created.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+          examples:
+            UserResponseFull:
+              $ref: '#/components/examples/UserResponseFull'
+            UserResponseAgeDefaultValue:
+              $ref: '#/components/examples/UserResponseAgeDefaultValue'
+    UserResponseOk:
+      description: Successful.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+          examples:
+            UserResponseFull:
+              $ref: '#/components/examples/UserResponseFull'
+            UserResponseAgeDefaultValue:
+              $ref: '#/components/examples/UserResponseAgeDefaultValue'
+  schemas:
+    User:
+      type: object
+      title: User
+      required:
+        - name
+        - email
+        - password
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        age:
+          type: number
+          default: 0
+          minimum: 0
+        password:
+          type: string
+          format: password
+        token:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+  examples:
+    UserPostRequestFull:
+      summary: Alex
+      value:
+        name: 'Alex Xut'
+        email: 'alexut@mail.com'
+        age: 30
+        password: 'paS$word123#!'
+    UserPostRequestWithoutAge:
+      summary: Robbin
+      value:
+        name: 'Robbin Vrutz'
+        email: 'vrutz@mail.com'
+        password: 'wordPas$987#1'
+    UserPatchRequestPass:
+      summary: Alex
+      value:
+        password: 'pass!@#okidoki1'
+    UserPatchRequestNameAndAge:
+      summary: Robbin
+      value:
+        name: 'Robbin Phill Vrutz'
+        age: 20
+    UserResponseFull:
+      summary: Alex
+      value:
+        id: 'a0f9a0b5-7608-43f6-b42b-a84795f47e80'
+        name: 'Alex Xut'
+        email: 'alexut@mail.com'
+        age: 30
+        password: '$2a$08$bt.3qkL5ffwemqKxFOkZn.ztjFOPNMDSUEc8JfIn6fDwsI4Nm06Am'
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZjlhMGI1LTc2MDgtNDNmNi1iNDJiLWE4NDc5NWY0N2U4MCIsImlhdCI6MTY5MjI5NTQyMSwiZXhwIjoxNjkyOTAwMjIxfQ.xi_aAbBmqAP9eTBYLB8KC4jOvRW_p_W9ZxBX3Uo2Qb4'
+        createdAt: '2023-08-17T18:03:41.920Z'
+        updatedAt: '2023-08-17T18:03:41.920Z'
+    UserResponseAgeDefaultValue:
+      summary: Robbin
+      value:
+        id: 'bc5cd101-192c-4da3-b04c-096ac7670968'
+        name: 'Robbin Vrutz'
+        email: 'vrutz@mail.com'
+        age: 0
+        password: '$2a$08$l5jDAo2cAo1DVRri0j8X7eOl.eEwTFhxyZq2YkVabPGOJ2/qp6wjG'
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJjNWNkMTAxLTE5MmMtNGRhMy1iMDRjLTA5NmFjNzY3MDk2OCIsImlhdCI6MTY5MjI5NjY3NywiZXhwIjoxNjkyOTAxNDc3fQ.RENqaRhT-S_ytYfyTdzi8NgpBcnqJ_NDfbxeoT6W_Ew'
+        createdAt: '2022-09-10T09:03:41.920Z'
+        updatedAt: '2022-09-10T09:03:41.920Z'

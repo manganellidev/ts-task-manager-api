@@ -6,28 +6,28 @@ import { IHTTPResponse, created, mapError } from '../common/status-code-mapper.j
 import { IUserDTO, mapUserFromEntityToDTO } from './util/user-dto-mapper.js';
 
 export default class CreateUserController extends BaseController<IHTTPRequest, IUserDTO> {
-    constructor(private readonly createUserService: CreateUserService) {
-        super('CreateUserController', '/users', 'post');
+  constructor(private readonly createUserService: CreateUserService) {
+    super('CreateUserController', '/users', 'post');
+  }
+
+  get route() {
+    return this._route;
+  }
+
+  get method() {
+    return this._method;
+  }
+
+  async handleRequest(
+    httpRequest: IHTTPRequest
+  ): Promise<IHTTPResponse<IUserDTO> | IHTTPResponse<IHTTPErrorResponse>> {
+    const { body } = httpRequest;
+    const userOrError = await this.createUserService.execute(body);
+
+    if ((userOrError as IHTTPErrorResponse).errorType) {
+      return mapError(userOrError as IHTTPErrorResponse, this.logger);
     }
 
-    get route() {
-        return this._route;
-    }
-
-    get method() {
-        return this._method;
-    }
-
-    async handleRequest(
-        httpRequest: IHTTPRequest
-    ): Promise<IHTTPResponse<IUserDTO> | IHTTPResponse<IHTTPErrorResponse>> {
-        const { body } = httpRequest;
-        const userOrError = await this.createUserService.execute(body);
-
-        if ((userOrError as IHTTPErrorResponse).errorType) {
-            return mapError(userOrError as IHTTPErrorResponse, this.logger);
-        }
-
-        return created(mapUserFromEntityToDTO(userOrError as User));
-    }
+    return created(mapUserFromEntityToDTO(userOrError as User));
+  }
 }

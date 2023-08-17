@@ -11,41 +11,41 @@ import CreateUpdateUserInputValidation from './util/create-update-user-input-val
 import { HTTPTypeError } from './util/type-error-enum.js';
 
 export default class UpdateUserService extends BaseService<IUser> {
-    constructor(private readonly userRepository: IUserRepository<IUser>) {
-        super('UpdateUserService');
+  constructor(private readonly userRepository: IUserRepository<IUser>) {
+    super('UpdateUserService');
+  }
+
+  async execute(updateUserServiceInput: unknown, user: IUser) {
+    const inputValidationFieldsResult =
+      CreateUpdateUserInputValidation.validateFieldsKeys(updateUserServiceInput);
+
+    if (!inputValidationFieldsResult.isSuccess) {
+      return this.createErrorResponse(HTTPTypeError.INVALID_INPUT, [
+        inputValidationFieldsResult.error as Error
+      ]);
     }
 
-    async execute(updateUserServiceInput: unknown, user: IUser) {
-        const inputValidationFieldsResult =
-            CreateUpdateUserInputValidation.validateFieldsKeys(updateUserServiceInput);
+    const userToBeUpdated = mapUserFromEntityToDTO(user);
+    const updates = Object.keys(updateUserServiceInput as object) as (keyof IUserDTO)[];
+    updates.forEach((key) => {
+      userToBeUpdated[key] = (updateUserServiceInput as IUserDTO)[key as never];
+    });
 
-        if (!inputValidationFieldsResult.isSuccess) {
-            return this.createErrorResponse(HTTPTypeError.INVALID_INPUT, [
-                inputValidationFieldsResult.error as Error
-            ]);
-        }
+    const { inputValidationResult, resultsChecked } =
+      CreateUpdateUserInputValidation.validate(userToBeUpdated);
 
-        const userToBeUpdated = mapUserFromEntityToDTO(user);
-        const updates = Object.keys(updateUserServiceInput as object) as (keyof IUserDTO)[];
-        updates.forEach((key) => {
-            userToBeUpdated[key] = (updateUserServiceInput as IUserDTO)[key as never];
-        });
-
-        const { inputValidationResult, resultsChecked } =
-            CreateUpdateUserInputValidation.validate(userToBeUpdated);
-
-        if (!inputValidationResult.isSuccess) {
-            return this.createErrorResponse(
-                HTTPTypeError.INVALID_INPUT,
-                inputValidationResult.error as Error[]
-            );
-        }
-
-        user.name = resultsChecked.nameOrError.value as Name;
-        user.email = resultsChecked.emailOrError.value as Email;
-        user.age = resultsChecked.ageOrError.value as Age;
-        user.password = resultsChecked.passwordOrError.value as Password;
-
-        return this.userRepository.update(user);
+    if (!inputValidationResult.isSuccess) {
+      return this.createErrorResponse(
+        HTTPTypeError.INVALID_INPUT,
+        inputValidationResult.error as Error[]
+      );
     }
+
+    user.name = resultsChecked.nameOrError.value as Name;
+    user.email = resultsChecked.emailOrError.value as Email;
+    user.age = resultsChecked.ageOrError.value as Age;
+    user.password = resultsChecked.passwordOrError.value as Password;
+
+    return this.userRepository.update(user);
+  }
 }

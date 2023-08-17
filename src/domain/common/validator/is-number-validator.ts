@@ -1,15 +1,15 @@
 import Validator from '../validator.js';
 
 export default class IsNumberValidator extends Validator<unknown> {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    isValid(value: unknown) {
-        return typeof value === 'number';
-    }
+  isValid(value: unknown) {
+    return typeof value === 'number';
+  }
 
-    errorMessage(property: unknown) {
-        return `The ${property} should be a number.`;
-    }
+  errorMessage(property: unknown) {
+    return `The ${property} should be a number.`;
+  }
 }

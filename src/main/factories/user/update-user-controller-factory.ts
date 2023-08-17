@@ -3,8 +3,8 @@ import MongoDbUserRepository from '../../../infrastructure/database/mongodb/repo
 import UpdateUserController from '../../../presentation/user/update-user-controller.js';
 
 export default class UpdateUserControllerFactory {
-    static make(userRepository: MongoDbUserRepository) {
-        const updateUserService = new UpdateUserService(userRepository);
-        return new UpdateUserController(updateUserService);
-    }
+  static make(userRepository: MongoDbUserRepository) {
+    const updateUserService = new UpdateUserService(userRepository);
+    return new UpdateUserController(updateUserService);
+  }
 }

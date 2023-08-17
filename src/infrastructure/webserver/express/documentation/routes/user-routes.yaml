@@ -1,0 +1,60 @@
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Creates a new user.
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserRequestPost'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserResponseCreated'
+        '400':
+          $ref: '#/components/responses/ErrorResponseBadRequest'
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Retrieves user information.
+      operationId: getUser
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponseOk'
+        '401':
+          $ref: '#/components/responses/ErrorResponseUnauthorized'
+    patch:
+      tags:
+        - Users
+      summary: Updates the user.
+      operationId: updateUser
+      security:
+        - BearerAuth: []
+      requestBody:
+        $ref: '#/components/requestBodies/UserRequestPatch'
+        examples:
+          UserPatchRequestPass:
+            $ref: '#/components/examples/UserPatchRequestPass'
+          UserPatchRequestNameAndAge:
+            $ref: '#/components/examples/UserPatchRequestNameAndAge'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponseOk'
+        '400':
+          $ref: '#/components/responses/ErrorResponseBadRequest'
+        '401':
+          $ref: '#/components/responses/ErrorResponseUnauthorized'
+    delete:
+      tags:
+        - Users
+      summary: Deletes the user.
+      operationId: deleteUser
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful.
+        '401':
+          $ref: '#/components/responses/ErrorResponseUnauthorized'

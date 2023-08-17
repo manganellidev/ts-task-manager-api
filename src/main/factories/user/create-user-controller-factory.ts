@@ -3,8 +3,8 @@ import MongoDbUserRepository from '../../../infrastructure/database/mongodb/repo
 import CreateUserController from '../../../presentation/user/create-user-controller.js';
 
 export default class CreateUserControllerFactory {
-    static make(userRepository: MongoDbUserRepository) {
-        const createUserService = new CreateUserService(userRepository);
-        return new CreateUserController(createUserService);
-    }
+  static make(userRepository: MongoDbUserRepository) {
+    const createUserService = new CreateUserService(userRepository);
+    return new CreateUserController(createUserService);
+  }
 }

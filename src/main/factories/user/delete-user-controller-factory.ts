@@ -3,8 +3,8 @@ import MongoDbUserRepository from '../../../infrastructure/database/mongodb/repo
 import DeleteUserController from '../../../presentation/user/delete-user-controller.js';
 
 export default class DeleteUserControllerFactory {
-    static make(userRepository: MongoDbUserRepository) {
-        const deleteUserService = new DeleteUserService(userRepository);
-        return new DeleteUserController(deleteUserService);
-    }
+  static make(userRepository: MongoDbUserRepository) {
+    const deleteUserService = new DeleteUserService(userRepository);
+    return new DeleteUserController(deleteUserService);
+  }
 }

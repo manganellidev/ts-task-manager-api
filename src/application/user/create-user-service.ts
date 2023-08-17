@@ -9,28 +9,28 @@ import CreateUpdateUserInputValidation from './util/create-update-user-input-val
 import { HTTPTypeError } from './util/type-error-enum.js';
 
 export default class CreateUserService extends BaseService<IUser> {
-    constructor(private readonly userRepository: IUserRepository<IUser>) {
-        super('CreateUserService');
+  constructor(private readonly userRepository: IUserRepository<IUser>) {
+    super('CreateUserService');
+  }
+
+  async execute(createUserServiceInput: unknown) {
+    const { inputValidationResult, resultsChecked } =
+      CreateUpdateUserInputValidation.validate(createUserServiceInput);
+
+    if (!inputValidationResult.isSuccess) {
+      return this.createErrorResponse(
+        HTTPTypeError.INVALID_INPUT,
+        inputValidationResult.error as Error[]
+      );
     }
 
-    async execute(createUserServiceInput: unknown) {
-        const { inputValidationResult, resultsChecked } =
-            CreateUpdateUserInputValidation.validate(createUserServiceInput);
+    const userToCreate = new User(
+      resultsChecked.nameOrError.value as Name,
+      resultsChecked.emailOrError.value as Email,
+      resultsChecked.ageOrError.value as Age,
+      resultsChecked.passwordOrError.value as Password
+    );
 
-        if (!inputValidationResult.isSuccess) {
-            return this.createErrorResponse(
-                HTTPTypeError.INVALID_INPUT,
-                inputValidationResult.error as Error[]
-            );
-        }
-
-        const userToCreate = new User(
-            resultsChecked.nameOrError.value as Name,
-            resultsChecked.emailOrError.value as Email,
-            resultsChecked.ageOrError.value as Age,
-            resultsChecked.passwordOrError.value as Password
-        );
-
-        return this.userRepository.save(userToCreate);
-    }
+    return this.userRepository.save(userToCreate);
+  }
 }

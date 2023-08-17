@@ -6,48 +6,48 @@ import Name from '../../../domain/user/name.js';
 import Password from '../../../domain/user/password.js';
 
 export default class CreateUpdateUserInputValidation {
-    static validateFieldsKeys(input: any) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { name, email, age, password, ...unknownFields } = input;
+  static validateFieldsKeys(input: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, email, age, password, ...unknownFields } = input;
 
-        if (Object.keys(unknownFields).length) {
-            return Result.fail(
-                new Error(
-                    Object.keys(unknownFields).length === 1
-                        ? `The field ${Object.keys(unknownFields)[0]} is invalid.`
-                        : `The fields ${Object.keys(unknownFields)
-                              .map((f: string) => f)
-                              .join(', ')} are invalid.`
-                )
-            );
-        }
-
-        return Result.ok('');
+    if (Object.keys(unknownFields).length) {
+      return Result.fail(
+        new Error(
+          Object.keys(unknownFields).length === 1
+            ? `The field ${Object.keys(unknownFields)[0]} is invalid.`
+            : `The fields ${Object.keys(unknownFields)
+                .map((f: string) => f)
+                .join(', ')} are invalid.`
+        )
+      );
     }
 
-    static validate(input: any) {
-        const { name, email, age, password } = input;
+    return Result.ok('');
+  }
 
-        const nameOrError = Name.create(name);
-        const emailOrError = Email.create(email);
-        const ageOrError = Age.create(age);
-        const passwordOrError = Password.create(password);
+  static validate(input: any) {
+    const { name, email, age, password } = input;
 
-        const inputValidationResult = Result.combine([
-            nameOrError,
-            emailOrError,
-            ageOrError,
-            passwordOrError
-        ]);
+    const nameOrError = Name.create(name);
+    const emailOrError = Email.create(email);
+    const ageOrError = Age.create(age);
+    const passwordOrError = Password.create(password);
 
-        return {
-            inputValidationResult,
-            resultsChecked: {
-                nameOrError,
-                emailOrError,
-                ageOrError,
-                passwordOrError
-            }
-        };
-    }
+    const inputValidationResult = Result.combine([
+      nameOrError,
+      emailOrError,
+      ageOrError,
+      passwordOrError
+    ]);
+
+    return {
+      inputValidationResult,
+      resultsChecked: {
+        nameOrError,
+        emailOrError,
+        ageOrError,
+        passwordOrError
+      }
+    };
+  }
 }

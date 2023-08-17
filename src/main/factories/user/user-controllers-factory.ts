@@ -7,18 +7,18 @@ import MongoDbUserRespositoryFactory from './mongo-db-user-repository-factory.js
 import UpdateUserControllerFactory from './update-user-controller-factory.js';
 
 export default class UserControllersFactory {
-    static make(): [
-        IBaseController<IHTTPRequest, unknown>[],
-        IBaseController<IHTTPRequest, unknown>[],
-        MongoDbUserRepository
-    ] {
-        const userRepository = MongoDbUserRespositoryFactory.make();
-        const userControllersWithoutAuth = [CreateUserControllerFactory.make(userRepository)];
-        const userControllers = [
-            GetUserControllerFactory.make(userRepository),
-            UpdateUserControllerFactory.make(userRepository),
-            DeleteUserControllerFactory.make(userRepository)
-        ];
-        return [userControllers, userControllersWithoutAuth, userRepository];
-    }
+  static make(): [
+    IBaseController<IHTTPRequest, unknown>[],
+    IBaseController<IHTTPRequest, unknown>[],
+    MongoDbUserRepository
+  ] {
+    const userRepository = MongoDbUserRespositoryFactory.make();
+    const userControllersWithoutAuth = [CreateUserControllerFactory.make(userRepository)];
+    const userControllers = [
+      GetUserControllerFactory.make(userRepository),
+      UpdateUserControllerFactory.make(userRepository),
+      DeleteUserControllerFactory.make(userRepository)
+    ];
+    return [userControllers, userControllersWithoutAuth, userRepository];
+  }
 }

@@ -1,0 +1,62 @@
+components:
+  responses:
+    ErrorResponseBadRequest:
+      description: The request contains invalid input.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            ErrorBadRequestEmail:
+              $ref: '#/components/examples/ErrorBadRequestEmail'
+            ErrorBadRequestEmailAndAge:
+              $ref: '#/components/examples/ErrorBadRequestEmailAndAge'
+    ErrorResponseUnauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            ErrorUnauthorized:
+              $ref: '#/components/examples/ErrorUnauthorized'
+  schemas:
+    Error:
+      title: Error
+      type: object
+      properties:
+        errorType:
+          type: string
+          enum:
+            - INVALID_INPUT
+            - UNAUTHORIZED
+            - NOT_FOUND
+            - RESOURCE_CONFLICT
+            - UNEXPECTED_ERROR
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+  examples:
+    ErrorBadRequestEmail:
+      summary: Bad request email
+      value:
+        errorType: 'INVALID_INPUT'
+        details:
+          - message: 'The alexut@mail.com1 should be an email.'
+    ErrorBadRequestEmailAndAge:
+      summary: Bad request email and age
+      value:
+        errorType: 'INVALID_INPUT'
+        details:
+          - message: 'The alexut@mail.com1 should be an email.'
+          - message: 'The thirty should be a number.'
+    ErrorUnauthorized:
+      summary: Unauthorized
+      value:
+        errorType: 'UNAUTHORIZED'
+        details:
+          - message: 'Please authenticate.'

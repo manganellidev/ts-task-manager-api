@@ -1,11 +1,11 @@
 export default abstract class ValueObject<T> {
-    constructor(private readonly _value: T) {}
+  constructor(private readonly _value: T) {}
 
-    get value() {
-        return this._value;
-    }
+  get value() {
+    return this._value;
+  }
 
-    equals(other: { value: unknown }) {
-        return this._value === other.value;
-    }
+  equals(other: { value: unknown }) {
+    return this._value === other.value;
+  }
 }
