@@ -1,0 +1,15 @@
+Dockerfile
+docker*.yaml
+.git
+.gitignore
+.husky
+.dist
+.vscode
+__test__
+.env*
+node_modules
+README.md
+.eslintignore
+.eslintrc.json
+.prettierignore
+.prettierrc.json

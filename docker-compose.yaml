@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  ts-task-manager-api:
+    container_name: ts-task-manager-api
+    image: ts-task-manager-api:latest
+    restart: always
+    build: .
+    ports:
+      - '8081:8081'
+    environment:
+      PORT: 8081
+      JWT_SECRET: tstemplate!123#
+      MONGODB_URL: mongodb://root:passMongoDB123@ts-task-manager-api-mongodb:27017
+    links:
+      - mongodb
+
+  mongodb:
+    container_name: ts-task-manager-api-mongodb
+    image: mongodb/mongodb-community-server:latest
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: root
+      MONGODB_INITDB_ROOT_PASSWORD: passMongoDB123
