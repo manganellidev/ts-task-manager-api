@@ -7,6 +7,7 @@ RUN npm run build
 
 FROM node:lts-alpine AS production
 WORKDIR /code
+COPY --from=builder /code/src/infrastructure/webserver/express/documentation ./dist/infrastructure/webserver/express/documentation
 COPY --from=builder /code/dist ./dist
 COPY package*.json ./
 RUN npm pkg delete scripts.prepare

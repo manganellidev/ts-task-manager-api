@@ -12,10 +12,10 @@ const swaggerDefinition: SwaggerDefinition = {
 const swaggerDefinitions = {
   swaggerDefinition,
   apis: [
-    'src/infrastructure/webserver/express/documentation/common/auth.yaml',
-    'src/infrastructure/webserver/express/documentation/routes/user-routes.yaml',
-    'src/infrastructure/webserver/express/documentation/models/user.yaml',
-    'src/infrastructure/webserver/express/documentation/models/error.yaml'
+    '**/infrastructure/webserver/express/documentation/common/auth.yaml',
+    '**/infrastructure/webserver/express/documentation/routes/user-routes.yaml',
+    '**/infrastructure/webserver/express/documentation/models/user.yaml',
+    '**/infrastructure/webserver/express/documentation/models/error.yaml'
   ]
 };
 
