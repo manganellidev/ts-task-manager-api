@@ -1,14 +1,14 @@
-FROM node:lts-alpine AS builder
-COPY . /code
+FROM node:lts-alpine as dev
 WORKDIR /code
+COPY . .
 RUN npm pkg delete scripts.prepare
 RUN npm install
 RUN npm run build
 
-FROM node:lts-alpine AS production
+FROM node:lts-alpine as prod
 WORKDIR /code
-COPY --from=builder /code/src/infrastructure/webserver/express/documentation ./dist/infrastructure/webserver/express/documentation
-COPY --from=builder /code/dist ./dist
+COPY --from=dev /code/src/infrastructure/webserver/express/documentation ./dist/infrastructure/webserver/express/documentation
+COPY --from=dev /code/dist ./dist
 COPY package*.json ./
 RUN npm pkg delete scripts.prepare
 RUN npm ci --omit=dev

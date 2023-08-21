@@ -71,9 +71,12 @@ MONGODB_URL=mongodb://127.0.0.1:27017/task-manager-api
 
 #### Run with docker
 
-- **dev**: `docker compose -f docker-compose.dev.yaml up`
-- **prod**: `docker compose up`
+`docker compose up`
 
 ### Swagger
 
 The `swagger ui` is available under `/api-docs`.
+
+### Build Docker Prod Image
+
+`docker build . -t ts-task-manager-api --target prod`

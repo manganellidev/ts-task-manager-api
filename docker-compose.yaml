@@ -3,17 +3,19 @@ version: '3'
 services:
   ts-task-manager-api:
     container_name: ts-task-manager-api
-    image: ts-task-manager-api:latest
+    image: ts-task-manager-api-dev:latest
     restart: always
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
     ports:
       - '8081:8081'
-    environment:
-      PORT: 8081
-      JWT_SECRET: tstemplate!123#
-      MONGODB_URL: mongodb://root:passMongoDB123@ts-task-manager-api-mongodb:27017
-    links:
+    env_file:
+      - .env
+    depends_on:
       - mongodb
+    command: npm run dev
 
   mongodb:
     container_name: ts-task-manager-api-mongodb
