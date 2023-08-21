@@ -6,8 +6,7 @@ A REST API to register tasks for users. You will be able to CRUD users, CRUD tas
 
 ## Prerequisites:
 
-- Node.js
-- MongoDB
+- Node.js & MongoDB || Docker & Docker Compose
 - Configure .env file
 
 <br />
@@ -51,7 +50,7 @@ p.s: make sure the local folder has write permission
 
 The file should be created in the root folder named **.env**
 
-Populate the .env file with these four env vars:
+Populate the .env file with your env vars:
 
 ```
 PORT=3000
@@ -65,7 +64,7 @@ MONGODB_URL=mongodb://127.0.0.1:27017/task-manager-api
 
 ## Start Task Manager API
 
-### Run the app
+#### Run the app
 
 `npm start`
 
@@ -73,10 +72,10 @@ MONGODB_URL=mongodb://127.0.0.1:27017/task-manager-api
 
 `docker compose up`
 
-### Swagger
-
-The `swagger ui` is available under `/api-docs`.
-
-### Build Docker Prod Image
+#### Build Docker Prod Image
 
 `docker build . -t ts-task-manager-api --target prod`
+
+#### Swagger
+
+The `swagger ui` is available under `/api-docs`.
