@@ -1,10 +1,10 @@
-import express, { Application, Response, Request } from 'express';
+import express, { Application, Response, Request, NextFunction } from 'express';
 import helmet from 'helmet';
 import { HTTPTypeError } from '../../../application/user/util/type-error-enum.js';
 import { IHTTPErrorResponse } from '../../../application/base-service.js';
 import { IBaseController, IHTTPRequest } from '../../../presentation/base-controller.js';
 import { adaptHandler } from './adapt-handler.js';
-import { auth } from './middleware/auth.js';
+import { UnauthorizedError, auth } from './middleware/auth.js';
 import IUserRepository from '../../../application/user/user-repository.js';
 import { IUser } from '../../../domain/user/user.js';
 import Logger, { ILogger } from '../../logging/logger.js';
@@ -15,29 +15,23 @@ import swaggerConfig from './documentation/swagger.js';
 export default class ExpressWebServer {
   private readonly _logger: ILogger;
 
-  private constructor(private readonly app: Application) {
+  private constructor(
+    private readonly app: Application,
+    private readonly _userRepository: IUserRepository<IUser>
+  ) {
     this._logger = Logger.create('ExpressWebServer');
   }
 
   static create(
     controllers: IBaseController<IHTTPRequest, unknown>[],
-    controllersWithoutAuth: IBaseController<IHTTPRequest, unknown>[],
     userRepository: IUserRepository<IUser>
   ) {
-    const server = new ExpressWebServer(express());
+    const server = new ExpressWebServer(express(), userRepository);
     server.addMiddlewares();
-
-    controllersWithoutAuth.forEach((controllerWithoutAuth) =>
-      server.app[controllerWithoutAuth._method as keyof Application](
-        controllerWithoutAuth._route,
-        adaptHandler(controllerWithoutAuth, server._logger)
-      )
-    );
 
     controllers.forEach((controller) =>
       server.app[controller._method as keyof Application](
         controller._route,
-        auth(userRepository),
         adaptHandler(controller, server._logger)
       )
     );
@@ -57,6 +51,7 @@ export default class ExpressWebServer {
       swaggerUi.serve,
       swaggerUi.setup(swaggerConfig.specs, swaggerConfig.options)
     );
+    this.app.use(auth(this._userRepository));
   }
 
   private handleNoRoute() {
@@ -64,13 +59,16 @@ export default class ExpressWebServer {
   }
 
   private handleExpressException() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (err: any, _: Request, res: Response) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    return (err: any, _req: Request, res: Response, _next: NextFunction) => {
       if (err instanceof SyntaxError) {
         return this.syntaxErrorResponse(res);
       }
       if (err.type === 'entity.too.large') {
         return this.payloadErrorResponse(res);
+      }
+      if (err instanceof UnauthorizedError) {
+        return this.unauthorizedErrorResponse(res, err);
       }
       return this.unexpectedErrorResponse(res);
     };
@@ -80,6 +78,12 @@ export default class ExpressWebServer {
     return res
       .status(400)
       .send(this.createErrorResponse(HTTPTypeError.INVALID_INPUT, 'The json is not valid.'));
+  }
+
+  private unauthorizedErrorResponse(res: Response, error: UnauthorizedError) {
+    return res
+      .status(401)
+      .send(this.createErrorResponse(error.type as HTTPTypeError, error.message));
   }
 
   private payloadErrorResponse(res: Response) {
