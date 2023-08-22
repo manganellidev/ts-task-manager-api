@@ -3,9 +3,10 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import IUserRepository from '../../../../application/user/user-repository.js';
 import { IUser } from '../../../../domain/user/user.js';
+import { HTTPErrorType } from '../../../../application/user/util/http-error-type-enum.js';
 
 export class UnauthorizedError extends Error {
-  public readonly type = 'UNAUTHORIZED';
+  public readonly type = HTTPErrorType.UNAUTHORIZED;
 
   constructor() {
     super('Please authenticate.');
@@ -18,7 +19,7 @@ interface IRequestWithUser extends Request {
 }
 
 const isRouteWithoutAuthentication = (method: string, path: string): boolean =>
-  method === 'POST' && path === '/users';
+  method === 'POST' && ['/users', '/users/login'].includes(path);
 
 export const auth = (userRepository: IUserRepository<IUser>) => {
   return async (req: Request, _res: Response, next: NextFunction) => {

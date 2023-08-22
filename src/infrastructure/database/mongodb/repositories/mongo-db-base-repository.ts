@@ -14,8 +14,9 @@ export default abstract class MongoDbBaseRepository<T, U> implements IBaseReposi
     return objModel ? objModel.mapToEntity() : objModel;
   }
 
-  async findAll(): Promise<T[]> {
-    const objsModel = await this.entityModel.find({});
+  async find(filter: { [key: string]: string | number }): Promise<T[]> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const objsModel = await this.entityModel.find(filter as any);
     const objsEntity = objsModel.map((objModel) => objModel.mapToEntity());
     return objsEntity;
   }

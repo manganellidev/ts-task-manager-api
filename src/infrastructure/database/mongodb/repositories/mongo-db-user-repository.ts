@@ -5,6 +5,7 @@ import { IUserModel, UserModel } from '../models/user-model.js';
 import { Model } from 'mongoose';
 import { IUser } from '../../../../domain/user/user.js';
 import { IBaseModel } from '../models/base-model.js';
+import bcryptjs from 'bcryptjs';
 
 export default class MongoDbUserRepository
   extends MongoDbBaseRepository<IUser, typeof UserModel>
@@ -12,6 +13,23 @@ export default class MongoDbUserRepository
 {
   constructor(entityModel: Model<typeof UserModel & IBaseModel<IUser>>) {
     super(entityModel);
+  }
+
+  async findByCredentials(email: string, password: string): Promise<IUser | null> {
+    const user = await this.entityModel.findOne<IUserModel>({ email });
+
+    console.log(user);
+    if (!user) {
+      return null;
+    }
+
+    const isMatch = await bcryptjs.compare(password, user.password);
+
+    if (!isMatch) {
+      return null;
+    }
+
+    return user.mapToEntity();
   }
 
   async save(user: IUser): Promise<IUser> {

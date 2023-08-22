@@ -1,5 +1,5 @@
 import Result from '../common/result.js';
-import IsNullOrUndefinedValidator from '../common/validator/is-null-or-undefined.js';
+import IsNullOrUndefinedValidator from '../common/validator/is-null-or-undefined-validator.js';
 import IsNumberValidator from '../common/validator/is-number-validator.js';
 import ValueObject from '../common/value-object.js';
 

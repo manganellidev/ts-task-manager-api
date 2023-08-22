@@ -8,15 +8,17 @@ export default class Password extends ValueObject<string> {
     super(_password);
   }
 
-  static create(password: unknown) {
+  static create(password: unknown, generateHash = false) {
     const isStrongPassowrdValidator = new IsStrongPasswordValidator();
     if (!isStrongPassowrdValidator.isValid(password + '')) {
       return Result.fail(new Error(isStrongPassowrdValidator.errorMessage(password)));
     }
 
-    password = Password.generateHash(password as string);
+    const passwordHashStr = generateHash
+      ? Password.generateHash(password as string)
+      : (password as string);
 
-    return Result.ok<Password>(new Password(password as string));
+    return Result.ok<Password>(new Password(passwordHashStr));
   }
 
   static generateHash(password: string) {

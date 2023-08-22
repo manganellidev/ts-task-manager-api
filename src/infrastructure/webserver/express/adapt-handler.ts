@@ -22,5 +22,5 @@ export const adaptHandler = (
 };
 
 const logHTTPRequest = (req: Request & { user: IUser }, logger: ILogger): void => {
-  logger.info(`[${req.method}] UserId: ${req.user ? req.user.id : '-'}`);
+  logger.info(`[${req.method} ${req.path}] UserId: ${req.user ? req.user.id : '-'}`);
 };

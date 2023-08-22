@@ -1,3 +1,15 @@
+export interface IFailCombine {
+  isSuccess: false;
+  value: null;
+  error: Error[];
+}
+
+export interface IFail {
+  isSuccess: false;
+  value: null;
+  error: Error;
+}
+
 export default class Result<T> {
   private constructor(
     private readonly _isSuccess: boolean,
@@ -21,12 +33,12 @@ export default class Result<T> {
     return new Result<T>(true, value, null);
   }
 
-  static fail(error: Error) {
-    return new Result(false, null, error);
+  static fail(error: Error): IFail {
+    return new Result(false, null, error) as IFail;
   }
 
-  static failCombine(errors: Error[]) {
-    return new Result(false, null, errors);
+  static failCombine(errors: Error[]): IFailCombine {
+    return new Result(false, null, errors) as IFailCombine;
   }
 
   static combine(results: unknown[]) {

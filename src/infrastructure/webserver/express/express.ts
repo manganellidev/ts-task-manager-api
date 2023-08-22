@@ -1,6 +1,6 @@
 import express, { Application, Response, Request, NextFunction } from 'express';
 import helmet from 'helmet';
-import { HTTPTypeError } from '../../../application/user/util/type-error-enum.js';
+import { HTTPErrorType } from '../../../application/user/util/http-error-type-enum.js';
 import { IHTTPErrorResponse } from '../../../application/base-service.js';
 import { IBaseController, IHTTPRequest } from '../../../presentation/base-controller.js';
 import { adaptHandler } from './adapt-handler.js';
@@ -77,20 +77,20 @@ export default class ExpressWebServer {
   private syntaxErrorResponse(res: Response) {
     return res
       .status(400)
-      .send(this.createErrorResponse(HTTPTypeError.INVALID_INPUT, 'The json is not valid.'));
+      .send(this.createErrorResponse(HTTPErrorType.INVALID_INPUT, 'The json is not valid.'));
   }
 
   private unauthorizedErrorResponse(res: Response, error: UnauthorizedError) {
     return res
       .status(401)
-      .send(this.createErrorResponse(error.type as HTTPTypeError, error.message));
+      .send(this.createErrorResponse(error.type as HTTPErrorType, error.message));
   }
 
   private payloadErrorResponse(res: Response) {
     return res
       .status(413)
       .send(
-        this.createErrorResponse(HTTPTypeError.INVALID_INPUT, 'The json payload is too large.')
+        this.createErrorResponse(HTTPErrorType.INVALID_INPUT, 'The json payload is too large.')
       );
   }
 
@@ -98,7 +98,7 @@ export default class ExpressWebServer {
     return res
       .status(404)
       .send(
-        this.createErrorResponse(HTTPTypeError.NOT_FOUND, 'The route requested does not exist.')
+        this.createErrorResponse(HTTPErrorType.NOT_FOUND, 'The route requested does not exist.')
       );
   }
 
@@ -107,13 +107,13 @@ export default class ExpressWebServer {
       .status(500)
       .send(
         this.createErrorResponse(
-          HTTPTypeError.UNEXPECTED_ERROR,
+          HTTPErrorType.UNEXPECTED_ERROR,
           'Unexpected error occured on the server.'
         )
       );
   }
 
-  private createErrorResponse(type: HTTPTypeError, detail: string): IHTTPErrorResponse {
+  private createErrorResponse(type: HTTPErrorType, detail: string): IHTTPErrorResponse {
     this._logger.error(createErrorLogMessage({ errorType: type, details: [{ message: detail }] }));
     return {
       errorType: type,

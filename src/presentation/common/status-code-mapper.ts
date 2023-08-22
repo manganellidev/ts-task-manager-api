@@ -1,5 +1,5 @@
 import { IHTTPErrorResponse } from '../../application/base-service.js';
-import { HTTPTypeError } from '../../application/user/util/type-error-enum.js';
+import { HTTPErrorType } from '../../application/user/util/http-error-type-enum.js';
 import { ILogger } from '../../infrastructure/logging/logger.js';
 
 export interface IHTTPResponse<T> {
@@ -35,6 +35,13 @@ const badRequest = <T>(body: T): IHTTPResponse<T> => {
   };
 };
 
+const unauthorized = <T>(body: T): IHTTPResponse<T> => {
+  return {
+    statusCode: 401,
+    body
+  };
+};
+
 const notFound = <T>(body: T): IHTTPResponse<T> => {
   return {
     statusCode: 404,
@@ -57,10 +64,11 @@ const unexpectedError = <T>(body: T): IHTTPResponse<T> => {
 };
 
 const errorList = {
-  [HTTPTypeError.INVALID_INPUT]: badRequest,
-  [HTTPTypeError.NOT_FOUND]: notFound,
-  [HTTPTypeError.RESOURCE_CONFLICT]: conflict,
-  [HTTPTypeError.UNEXPECTED_ERROR]: unexpectedError
+  [HTTPErrorType.INVALID_INPUT]: badRequest,
+  [HTTPErrorType.NOT_FOUND]: notFound,
+  [HTTPErrorType.UNAUTHORIZED]: unauthorized,
+  [HTTPErrorType.RESOURCE_CONFLICT]: conflict,
+  [HTTPErrorType.UNEXPECTED_ERROR]: unexpectedError
 };
 
 export const mapError = (

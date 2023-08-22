@@ -25,7 +25,11 @@ const userSchema = new Schema<IUserModel>(
   {
     _id: String,
     name: String,
-    email: String,
+    email: {
+      type: String,
+      unique: true,
+      index: true
+    },
     age: Number,
     password: String,
     token: String

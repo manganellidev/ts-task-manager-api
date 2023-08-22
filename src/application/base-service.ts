@@ -1,9 +1,9 @@
 import { IUser } from '../domain/user/user.js';
 import Logger, { ILogger } from '../infrastructure/logging/logger.js';
-import { HTTPTypeError } from './user/util/type-error-enum.js';
+import { HTTPErrorType } from './user/util/http-error-type-enum.js';
 
 export interface IHTTPErrorResponse {
-  errorType: HTTPTypeError;
+  errorType: HTTPErrorType;
   details: {
     message: string;
   }[];
@@ -11,7 +11,7 @@ export interface IHTTPErrorResponse {
 
 interface IBaseService<T> {
   execute(input: unknown): Promise<T | IHTTPErrorResponse>;
-  createErrorResponse(type: HTTPTypeError, errors: Error[]): IHTTPErrorResponse;
+  createErrorResponse(type: HTTPErrorType, errors: Error[]): IHTTPErrorResponse;
 }
 
 export default abstract class BaseService<T> implements IBaseService<T> {
@@ -23,7 +23,7 @@ export default abstract class BaseService<T> implements IBaseService<T> {
 
   abstract execute(input?: unknown, user?: IUser): Promise<T | IHTTPErrorResponse>;
 
-  createErrorResponse(type: HTTPTypeError, errors: Error[]): IHTTPErrorResponse {
+  createErrorResponse(type: HTTPErrorType, errors: Error[]): IHTTPErrorResponse {
     return {
       errorType: type,
       details: errors.map((error) => ({ message: error.message }))

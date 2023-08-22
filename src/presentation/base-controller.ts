@@ -1,5 +1,5 @@
 import { IHTTPErrorResponse } from '../application/base-service.js';
-import { HTTPTypeError } from '../application/user/util/type-error-enum.js';
+import { HTTPErrorType } from '../application/user/util/http-error-type-enum.js';
 import { IUser } from '../domain/user/user.js';
 import Logger, { ILogger } from '../infrastructure/logging/logger.js';
 import { IHTTPResponse, mapError } from './common/status-code-mapper.js';
@@ -50,7 +50,7 @@ export default abstract class BaseController<T, U> implements IBaseController<T,
 
   private controllerUnexpectedError(): IHTTPErrorResponse {
     return {
-      errorType: HTTPTypeError.UNEXPECTED_ERROR,
+      errorType: HTTPErrorType.UNEXPECTED_ERROR,
       details: [
         {
           message: 'An unexpected error occured processing the request.'
