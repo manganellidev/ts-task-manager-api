@@ -1,0 +1,1 @@
+describe('auth.yaml', () => {test('should...', () => {});});

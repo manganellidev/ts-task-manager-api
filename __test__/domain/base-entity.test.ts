@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('base-entity', () => {
   test('should...', () => {});
 });

@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('logger', () => {
   test('should...', () => {});
 });

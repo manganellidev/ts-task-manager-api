@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('value-object', () => {
   test('should...', () => {});
 });

@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('adapt-handler', () => {
   test('should...', () => {});
 });

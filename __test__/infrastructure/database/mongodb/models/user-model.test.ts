@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('user-model', () => {
   test('should...', () => {});
 });

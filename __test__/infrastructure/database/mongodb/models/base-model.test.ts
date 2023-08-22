@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('base-model', () => {
   test('should...', () => {});
 });

@@ -1,3 +1,3 @@
-describe('index', () => {
+describe('auth', () => {
   test('should...', () => {});
 });
