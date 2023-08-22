@@ -18,7 +18,6 @@ export default class MongoDbUserRepository
   async findByCredentials(email: string, password: string): Promise<IUser | null> {
     const user = await this.entityModel.findOne<IUserModel>({ email });
 
-    console.log(user);
     if (!user) {
       return null;
     }

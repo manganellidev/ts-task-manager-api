@@ -16,7 +16,7 @@ export interface IUser extends IBaseEntity {
 }
 
 export default class User extends BaseEntity implements IUser {
-  private readonly _token: Token;
+  private _token: Token;
 
   constructor(
     private _name: Name,
@@ -66,6 +66,10 @@ export default class User extends BaseEntity implements IUser {
 
   get token() {
     return this._token;
+  }
+
+  set token(token: Token) {
+    this._token = token;
   }
 
   get createdAt() {

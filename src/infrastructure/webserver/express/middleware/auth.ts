@@ -37,7 +37,7 @@ export const auth = (userRepository: IUserRepository<IUser>) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as Record<string, unknown>;
       const user = await userRepository.findById(decoded.id as string);
 
-      if (!user) {
+      if (!user || !user.token.value) {
         return next(new UnauthorizedError());
       }
 

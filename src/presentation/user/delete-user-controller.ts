@@ -3,7 +3,7 @@ import DeleteUserService from '../../application/user/delete-user-service.js';
 import BaseController, { IHTTPRequest } from '../base-controller.js';
 import { IHTTPResponse, mapError, ok } from '../common/status-code-mapper.js';
 
-export default class DeleteUserController extends BaseController<IHTTPRequest, string> {
+export default class DeleteUserController extends BaseController<IHTTPRequest, null> {
   constructor(private readonly deleteUserService: DeleteUserService) {
     super('DeleteUserController', '/users/me', 'delete');
   }
@@ -18,7 +18,7 @@ export default class DeleteUserController extends BaseController<IHTTPRequest, s
 
   async handleRequest(
     httpRequest: IHTTPRequest
-  ): Promise<IHTTPResponse<string> | IHTTPResponse<IHTTPErrorResponse>> {
+  ): Promise<IHTTPResponse<null> | IHTTPResponse<IHTTPErrorResponse>> {
     const { user } = httpRequest;
     const userOrError = await this.deleteUserService.execute(user.id);
 
@@ -26,6 +26,6 @@ export default class DeleteUserController extends BaseController<IHTTPRequest, s
       return mapError(userOrError as IHTTPErrorResponse, this.logger);
     }
 
-    return ok('');
+    return ok(null);
   }
 }

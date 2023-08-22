@@ -7,6 +7,7 @@ import { InputType } from './util/input-type-enum.js';
 import LoginUserInputValidation, { IInputValues } from './util/login-user-input-validation.js';
 import Email from '../../domain/user/email.js';
 import Password from '../../domain/user/password.js';
+import Token from '../../domain/user/token.js';
 
 export default class LoginUserService extends BaseService<IUser> {
   constructor(private readonly userRepository: IUserRepository<IUser>) {
@@ -45,6 +46,9 @@ export default class LoginUserService extends BaseService<IUser> {
         new Error('Unable to login with provided credentials.')
       ]);
     }
+
+    user.token = Token.createAndSign(user.id);
+    await this.userRepository.update(user);
 
     return user;
   }
