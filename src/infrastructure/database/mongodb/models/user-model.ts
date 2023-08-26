@@ -47,7 +47,7 @@ userSchema.methods.mapToEntity = function (): IUser {
     email: Email.create(userModel.email).value!,
     age: Age.create(userModel.age).value!,
     password: Password.create(userModel.password).value!,
-    token: Token.create(userModel.token),
+    token: Token.create(userModel.token).value,
     createdAt: userModel.createdAt,
     updatedAt: userModel.updatedAt
   };

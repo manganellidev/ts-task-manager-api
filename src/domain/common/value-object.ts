@@ -6,6 +6,7 @@ export default abstract class ValueObject<T> {
   }
 
   equals(other: { value: unknown }) {
+    console.log(this._value, other.value);
     return this._value === other.value;
   }
 }

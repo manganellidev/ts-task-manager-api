@@ -29,7 +29,7 @@ export default class User extends BaseEntity implements IUser {
   ) {
     super(id);
     this.validateEntity(_name, _email, _age, _password);
-    this._token = Token.createAndSign(this._id);
+    this._token = Token.createAndSign(this._id).value;
   }
 
   get name() {

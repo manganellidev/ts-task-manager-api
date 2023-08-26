@@ -9,7 +9,7 @@ export default class LogoutUserService extends BaseService<void> {
   }
 
   async execute(user: IUser): Promise<void> {
-    user.token = Token.create('');
+    user.token = Token.create('').value;
     await this.userRepository.update(user);
   }
 }

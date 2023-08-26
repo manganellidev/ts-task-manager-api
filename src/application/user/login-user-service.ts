@@ -47,7 +47,7 @@ export default class LoginUserService extends BaseService<IUser> {
       ]);
     }
 
-    user.token = Token.createAndSign(user.id);
+    user.token = Token.createAndSign(user.id).value;
     await this.userRepository.update(user);
 
     return user;
