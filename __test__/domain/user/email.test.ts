@@ -13,7 +13,22 @@ describe(`${valueObjectUnderTest} value object`, () => {
     expect(emailOrError.error).toBeNull();
   });
 
-  const errorScenarios = ['ya@mail.com123', 123, {}, null, undefined, '', '   '];
+  const errorScenarios = [
+    'yamail.com',
+    'ya@mailcom',
+    `y${'a'.repeat(64)}@mail.com`,
+    `ya@mail.${'c'.repeat(124)}`,
+    `ya@mail.${'c'.repeat(64)}`,
+    `ya@${'m'.repeat(64)}.com`,
+    `ya@$mail .com`,
+    `ya @$mail.com`,
+    123,
+    {},
+    null,
+    undefined,
+    '',
+    '   '
+  ];
 
   test.each(errorScenarios)(
     `should NOT create ${valueObjectUnderTest} value object when value is: %s`,

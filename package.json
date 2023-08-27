@@ -1,7 +1,7 @@
 {
-  "name": "ts-template",
+  "name": "ts-task-manager-api",
   "version": "1.0.0",
-  "description": "A TypeScript template app with Eslint, Prettier, Husky, Dotenv, Nodemon, and Jest",
+  "description": "REST API to manage tasks per user.",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -53,7 +53,6 @@
     "mongoose": "^7.4.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
-    "validator": "^13.11.0",
     "winston": "^3.10.0"
   }
 }
