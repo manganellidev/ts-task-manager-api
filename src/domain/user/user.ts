@@ -1,9 +1,5 @@
 import BaseEntity, { IBaseEntity } from '../base-entity.js';
-import Age from './age.js';
-import Email from './email.js';
-import Name from './name.js';
-import Password from './password.js';
-import Token from './token.js';
+import { Age, Email, Name, Password, Token } from './user-value-objects.js';
 
 export interface IUser extends IBaseEntity {
   name: Name;

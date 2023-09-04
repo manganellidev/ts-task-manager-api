@@ -8,7 +8,8 @@ export default class Token extends ValueObject<string> {
   }
 
   static createAndSign(userId: string) {
-    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET ?? '', {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET!, {
       expiresIn: '7 days'
     });
 

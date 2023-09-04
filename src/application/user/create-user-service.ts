@@ -1,7 +1,4 @@
-import Age from '../../domain/user/age.js';
-import Email from '../../domain/user/email.js';
-import Name from '../../domain/user/name.js';
-import Password from '../../domain/user/password.js';
+import { Age, Email, Name, Password } from '../../domain/user/user-value-objects.js';
 import User, { IUser } from '../../domain/user/user.js';
 import BaseService from '../base-service.js';
 import IUserRepository from './user-repository.js';

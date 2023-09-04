@@ -6,6 +6,16 @@ const valueObjectUnderTest = 'Password';
 describe(`${valueObjectUnderTest} value object`, () => {
   test(`should create ${valueObjectUnderTest} value object when value is a valid password`, () => {
     const password = 'Giorgiooo1!';
+    const passwordOrError = Password.create(password, true) as Result<Password>;
+    const passwordOrError2 = Password.create(password, true) as Result<Password>;
+
+    expect(passwordOrError.isSuccess).toBeTruthy();
+    expect(passwordOrError).not.toEqual(passwordOrError2);
+    expect(passwordOrError.error).toBeNull();
+  });
+
+  test(`should create ${valueObjectUnderTest} value object without generating new password hash`, () => {
+    const password = 'Giorgiooo1!';
     const nameOrError = Password.create(password) as Result<Password>;
 
     expect(nameOrError.isSuccess).toBeTruthy();
