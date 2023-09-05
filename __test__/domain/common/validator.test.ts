@@ -1,3 +1,0 @@
-describe('validator', () => {
-  test('should...', () => {});
-});

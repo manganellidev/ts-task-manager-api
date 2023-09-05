@@ -1,3 +1,7 @@
+export interface IValueObject<T> {
+  value: T;
+}
+
 export default abstract class ValueObject<T> {
   constructor(private readonly _value: T) {}
 
@@ -5,8 +9,7 @@ export default abstract class ValueObject<T> {
     return this._value;
   }
 
-  equals(other: { value: unknown }) {
-    console.log(this._value, other.value);
+  equals(other: IValueObject<T>) {
     return this._value === other.value;
   }
 }
