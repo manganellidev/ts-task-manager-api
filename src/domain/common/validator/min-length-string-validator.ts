@@ -10,6 +10,6 @@ export default class MinLengthStringValidator extends Validator<string> {
   }
 
   errorMessage(property: string): string {
-    return `The "${property}" property should contain at least ${this._minLength} chars.`;
+    return `The ${property} property should contain at least ${this._minLength} chars.`;
   }
 }

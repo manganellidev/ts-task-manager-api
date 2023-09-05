@@ -10,6 +10,6 @@ export default class MaxLengthStringValidator extends Validator<string> {
   }
 
   errorMessage(property: string): string {
-    return `The "${property}" property should contain at most ${this._maxLength} chars.`;
+    return `The ${property} property should contain at most ${this._maxLength} chars.`;
   }
 }
