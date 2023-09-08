@@ -37,7 +37,7 @@ export default class Result<T> {
     return new Result(false, null, error) as IFail;
   }
 
-  static failCombine(errors: Error[]): IFailCombine {
+  private static failCombine(errors: Error[]): IFailCombine {
     return new Result(false, null, errors) as IFailCombine;
   }
 
@@ -61,7 +61,7 @@ export default class Result<T> {
   static validateEntity(results: unknown[]) {
     results.forEach((result) => {
       if (!(result instanceof Result)) {
-        throw new Error('Result item must be an instance of Result class to be combined');
+        throw new Error('Result item must be an instance of Result class to be combined.');
       }
     });
   }
