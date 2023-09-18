@@ -10,8 +10,8 @@ export interface IHTTPErrorResponse {
 }
 
 interface IBaseService<T> {
-  execute(input: unknown): Promise<T | IHTTPErrorResponse>;
-  createErrorResponse(type: HTTPErrorType, errors: Error[]): IHTTPErrorResponse;
+  execute: (input: unknown) => Promise<T | IHTTPErrorResponse>;
+  createErrorResponse: (type: HTTPErrorType, errors: Error[]) => IHTTPErrorResponse;
 }
 
 export default abstract class BaseService<T> implements IBaseService<T> {

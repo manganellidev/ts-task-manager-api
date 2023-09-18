@@ -1,6 +1,6 @@
 interface IValidator<T> {
-  isValid(value: T): boolean;
-  errorMessage(property: T): string;
+  isValid: (value: T) => boolean;
+  errorMessage: (property: T) => string;
 }
 
 export default abstract class Validator<T> implements IValidator<T> {

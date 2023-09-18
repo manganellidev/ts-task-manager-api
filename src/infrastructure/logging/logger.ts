@@ -2,9 +2,9 @@ import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, label, printf, splat, json } = format;
 
 export interface ILogger {
-  info(message: string, userId?: string): void;
-  warn(message: string, userId?: string): void;
-  error(message: string, userId?: string, stack?: string): void;
+  info: (message: string, userId?: string) => void;
+  warn: (message: string, userId?: string) => void;
+  error: (message: string, userId?: string, stack?: string) => void;
 }
 
 export default class Logger implements ILogger {
