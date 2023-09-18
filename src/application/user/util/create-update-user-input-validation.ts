@@ -1,8 +1,5 @@
 import Result from '../../../domain/common/result.js';
-import Age from '../../../domain/user/age.js';
-import Email from '../../../domain/user/email.js';
-import Name from '../../../domain/user/name.js';
-import Password from '../../../domain/user/password.js';
+import { Age, Email, Name, Password } from '../../../domain/user/user-value-objects.js';
 import { IInputValidation } from './base-input-validation.js';
 
 export default class CreateUpdateUserInputValidation {
