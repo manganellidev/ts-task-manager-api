@@ -1,3 +1,0 @@
-describe('swagger', () => {
-  test('should...', () => {});
-});
